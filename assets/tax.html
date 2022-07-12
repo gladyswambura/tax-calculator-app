@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Kenyan-taxpayer-app</title>
+</head>
+
+<body>
+    <div class="container tax"><br>
+        <h2 class="text-center text-white heading">KENYAN PAYE TAX CALCULATOR <br><a class="btn btn-light"
+                href="../index.html">Home</a> </h2><br>
+        <div class="row">
+            <div class="col-md-5 ml-5">
+                <div class="card" style="width:500px; margin-top:80px;">
+                    <div class="card-header text-center"> YOUR PAYROLL DATA</div>
+                    <small id="emailHelp" class="text-center form-text text-muted">We'll never share your
+                        information with anyone else.</small>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-0">
+                                <div class="row">
+                                    <label for="period">PAY PERIOD:</label>
+                                    <div class="col-6">
+                                        <input type="radio" id="month" name="pay_period" value="month" />
+                                        <label>MONTH</label>
+
+                                        <input type="radio" id="year" name="pay_period" value="year" />
+                                        <label>YEAR</label>
+                                    </div>
+                                </div>
+                            </div><br><br>
+                            <div class="form-1">
+                                <label for="salary">BASIC SALARY:</label>
+                                <div class="input-1">
+                                    <input type="text" name="salary" id="salary" class="form-control required salary"
+                                        placeholder="Enter Your salary">
+                                </div>
+                            </div><br><br>
+                            <div class="form-2">
+                                <label for="benefits">BENEFITS (BONUS, ALLOWANCE):</label>
+                                <div class="input-2">
+                                    <input type="text" name="benefits" id="benefits" class="form-control benefits"
+                                        placeholder="Enter your benefits">
+                                </div>
+                            </div><br><br>
+                            <div class="form-3">
+                                <label for="nssf">DEDUCT NSSF:</label>
+                                <input type="radio" id="nssf_yes" name="deduct_nssf" value="yes" />
+                                <label>YES</label>
+
+                                <input type="radio" id="nssf_no" name="deduct_nssf" value="no" />
+                                <label>NO</label>
+                            </div><br><br>
+                            <div class="form-4">
+                                <label for="nssfrate">NSSF RATES:</label>
+                                <input type="radio" id="new" name="nssf_rate" value="new" />
+                                <label>NEW NSSF RATES (TIERED)</label>
+
+                                <input style="margin-left:110px;" type="radio" id="old" name="nssf_rate" value="old" />
+                                <label>OLD NSSF RATES (KSH 200)</label>
+                            </div><br><br>
+                            <div class="form-5">
+                                <label for="nhif">DEDUCT NHIF:</label>
+                                <input class="modify-e" type="radio" id="nhif_yes" name="deduct_nhif" value="yes" />
+                                <label>YES</label>
+
+                                <input class="modify-f" type="radio" id="nhif_no" name="deduct_nhif" value="no" />
+                                <label>NO </label>
+                            </div><br><br>
+                            <div class="form-6 ml-5">
+                                <button type="button" onclick="calculateTax()" class="btn btn-info btn-calculate"
+                                    id="btn">CALCULATE</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" style="width:500px;">
+                    <div class="card-header">
+                        <h3 class="text-center">Results:</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="col">
+                            <div class="fxt-content">
+                                <div id="payeresults">
+                                    <table class="table table-striped">
+                                        <thead style="text-decoration:underline;">
+                                            <tr>
+                                                <th>INCOME NAME</th>
+                                                <th>VALUE (Ksh)</th>
+                                            </tr>
+                                        </thead>
+                                        <br>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    INCOME BEFORE PENSION<br> DEDUCTION
+                                                </td>
+                                                <td id="income_before_pension_deduction">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    DEDUCTIBLE NSSF PENSION<br> CONTRIBUTION
+                                                </td>
+                                                <td id="deductibleNssfPensionContribution">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    INCOME AFTER PENSION<br> DEDUCTIONS
+                                                </td>
+                                                <td id="incomeAfterPensiondeductons">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>BENEFITS IN KIND</td>
+                                                <td id="benefits-allowance">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>TAXABLE INCOME</td>
+                                                <td id="taxable_income"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>TAX ON TAXABLE<br> INCOME</td>
+                                                <td id="taxOntaxableIncome">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PERSONAL RELIEF</td>
+                                                <td id="personalRelief"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>TAX NET OFF RELIEF</td>
+                                                <td id="taxRelief">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PAYE</td>
+                                                <td id="paye"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>CHARGEABLE INCOME</td>
+                                                <td id="chargeableIncome">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>NHIF CONTRIBUTION</td>
+                                                <td id="nhif">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>NET PAY</td>
+                                                <td id="netPay"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <br><br><br><br><br><br>
+    </div>
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">KENYAN TAX CALCULATOR</a></li>
+            </ul>
+            <p class="text-center text-muted">&copy; 2022 Company, Inc --<small>Gladys</small></p>
+        </footer>
+    </div>
+    <script src="./js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>
